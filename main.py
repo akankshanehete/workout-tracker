@@ -2,7 +2,8 @@ import requests
 import datetime
 
 APP_ID = '348bd446'
-API_KEY = '////////////////'
+API_KEY = '/'
+SHEETY_KEY = '/'
 
 query = str(input("What did you do today?: "))
 
@@ -23,10 +24,14 @@ nutritionix_response = requests.post('https://trackapi.nutritionix.com/v2/natura
                                     headers=headers)
 
 exercise_data = nutritionix_response.json()['exercises']
-print(exercise_data)
+
 
 today = str(datetime.date.today().strftime("%d/%m/20%y"))
 current_time = str(datetime.datetime.now().strftime('%H:%M:%S'))
+
+sheety_headers = {
+    "Authorization": 'Bearer akankshanehete20020929'
+}
 
 for exercise in exercise_data:
     sheety_params = {
@@ -39,7 +44,8 @@ for exercise in exercise_data:
         }
     }
     sheety_response = requests.post('https://api.sheety.co/ee9e56905dabfef98cb248dacc06b32a/myWorkouts/workouts',
-                                    json=sheety_params)
+                                    json=sheety_params,
+                                    headers=sheety_headers)
 print(sheety_response.text)
 
 
