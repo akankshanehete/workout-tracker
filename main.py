@@ -1,9 +1,11 @@
+import os
+
 import requests
 import datetime
 
-APP_ID = '348bd446'
-API_KEY = '/'
-SHEETY_KEY = '/'
+os.environ['APP_ID'] = '/'
+os.environ['API_KEY'] = '/'
+os.environ['SHEETY_KEY'] = '/'
 
 query = str(input("What did you do today?: "))
 
@@ -13,6 +15,8 @@ nutritionix_params = {
     "age": '19'
 }
 
+APP_ID = os.getenv('APP_ID')
+API_KEY = os.getenv('API_KEY')
 headers = {
     "x-app-id": APP_ID,
     "x-app-key": API_KEY,
@@ -24,13 +28,16 @@ nutritionix_response = requests.post('https://trackapi.nutritionix.com/v2/natura
                                     headers=headers)
 
 exercise_data = nutritionix_response.json()['exercises']
+print(exercise_data)
 
 
 today = str(datetime.date.today().strftime("%d/%m/20%y"))
 current_time = str(datetime.datetime.now().strftime('%H:%M:%S'))
 
+SHEETY_KEY = os.getenv('SHEETY_KEY')
+
 sheety_headers = {
-    "Authorization": 'Bearer akankshanehete20020929'
+    "Authorization": SHEETY_KEY
 }
 
 for exercise in exercise_data:
